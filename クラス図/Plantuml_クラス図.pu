@@ -1,0 +1,36 @@
+@startuml
+Main : + main()
+
+
+TicketVendor : - items:List<Item>
+TicketVendor : - cart:Cart
+
+TicketVendor : + showItems():void
+TicketVendor : + addItemToCart(int itemld):void
+TicketVendor : + showCartItems():void
+TicketVendor : + calcChange(int payment):void
+
+
+
+Cart : - items:List<CartItem>
+
+Cart : + addItem(Item item):void
+Cart : + getCartItems():List<CartItem>
+Cart : + getTotalPrice():int
+
+
+CartItem : - id:int
+CartItem : - name:String
+CartItem : - price:int
+CartItem : - quantity:int
+
+
+Item : - id:int
+Item : - name : String
+Item : - price : int
+
+Main -> TicketVendor
+TicketVendor o-- Cart
+TicketVendor o-- Item
+Cart o-- CartItem
+@enduml
