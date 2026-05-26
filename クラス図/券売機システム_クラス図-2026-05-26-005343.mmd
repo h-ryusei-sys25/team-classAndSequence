@@ -1,0 +1,38 @@
+classDiagram
+    class Main {
+	    + main()
+    }
+
+    class TicketVentor {
+	    - items List
+	    - cart Cart
+	    + showItems() void
+	    + addItemTocart(int itemld) void
+	    + showCartItems() void
+	    + calcChange(int payment) void
+    }
+
+    class Cart {
+	    - carItems List~CartItem~
+	    + addItem(Item item) void
+	    + getCartItems() List~CartItem~
+	    + getTotalPrice() int
+    }
+
+    class Item {
+	    - id int
+	    - name String
+	    - price int
+    }
+
+    class CartItem {
+	    - id int
+	    - name String
+	    - price int
+	    - quantity int
+    }
+
+    TicketVentor <-- Main
+    TicketVentor o-- Cart
+    TicketVentor o-- Item
+    Cart o-- CartItem
