@@ -1,0 +1,57 @@
+@startuml
+    actor customer
+    participant Main
+    participant TicketVendor
+    participant Item
+    participant Cart
+    participant CartItem
+    activate Main
+    activate TicketVendor
+    Main -> TicketVendor : new
+    TicketVendor -> Item : new
+    activate Item
+    Note right of Item : 商品の個数分生産する
+    TicketVendor-> Cart: new
+    activate Cart
+    deactivate Cart
+    deactivate Item
+    deactivate TicketVendor
+    Main -> TicketVendor : showItems()
+    activate TicketVendor
+    deactivate TicketVendor
+    loop
+        activate customer
+        customer -> Main : 商品番号入力
+        Main -> TicketVendor : addItemToCart( id )
+        deactivate customer
+        activate TicketVendor
+        TicketVendor -> Cart : addItem( item )
+        activate Cart
+        deactivate TicketVendor
+        Cart -> CartItem : new
+        activate CartItem
+        deactivate CartItem
+        deactivate Cart
+        Note right of CartItem : 同じ商品がある場合は,newではなく数量を変更する
+    end
+
+    Main -> TicketVendor : showCartItems()
+    activate TicketVendor
+    TicketVendor -> Cart : getCartItems()
+    activate Cart
+    deactivate Cart
+    TicketVendor -> Cart : getTotalPrice()
+    activate Cart
+    deactivate Cart
+    deactivate TicketVendor
+    activate customer
+    customer -> Main : 投入金額入力
+    Main -> TicketVendor : calcChange( payment )
+    deactivate customer
+    activate TicketVendor
+    TicketVendor -> Cart : getTotalPrice()
+    activate Cart
+    deactivate Cart
+    deactivate TicketVendor
+    deactivate Main
+@enduml
